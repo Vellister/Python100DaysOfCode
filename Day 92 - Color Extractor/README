@@ -1,0 +1,56 @@
+# 🎨 Color Extractor - Desktop Application
+
+A simple and intuitive desktop application to extract the top 10 most dominant colors from any image, displaying their HEX codes and percentage of occurrence.
+
+## ✨ Features
+
+-   **Image Selection**: Upload images in PNG, JPG, JPEG, GIF, BMP, and WEBP formats.
+-   **Dominant Color Extraction**: Uses the K-Means algorithm to identify the 10 most prominent colors in the image.
+-   **Palette Visualization**: Displays the extracted colors in a visual palette, along with their HEX codes and percentages.
+-   **Copy to Clipboard**: Easily copy the HEX code of any color with a single click.
+-   **Intuitive Graphical Interface**: Developed with Tkinter for a native and user-friendly experience.
+
+## 🛠️ Technologies Used
+
+-   **Python 3.x**
+-   **Tkinter**: Python's standard library for creating graphical user interfaces.
+-   **Pillow (PIL Fork)**: For image manipulation and processing.
+-   **NumPy**: For efficient numerical operations on pixel arrays.
+-   **scikit-learn**: Implementation of the K-Means algorithm for color clustering.
+-   **pyperclip**: For copying text to the system clipboard.
+
+##  How to Install and Run
+
+Follow the steps below to set up and run the Color Extractor on your local environment.
+
+### Prerequisites
+
+Ensure you have Python 3.x installed on your system.
+
+### 1. Clone the Repository (or download the `color_extractor_desktop.py` file)
+
+```bash
+git clone https://github.com/your-username/color-extractor.git # If there's a repository
+cd color-extractor
+```
+
+### 2. Install Dependencies
+
+Open your terminal or command prompt and run the following command to install the necessary libraries:
+
+```bash
+pip install pillow numpy scikit-learn pyperclip
+```
+
+### 3. Run the Application
+
+After installing the dependencies, you can start the application by running the Python file:
+
+```bash
+python color_extractor_desktop.py
+```
+
+A Color Extractor application window will open.
+
+### 4. Enjoy :D
+
