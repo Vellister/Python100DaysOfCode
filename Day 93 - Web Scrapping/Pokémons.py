@@ -45,4 +45,4 @@ def plot_pie(data):
 if __name__ == "__main__":
     type_counts = get_pokemon_types()
     plot_pie(type_counts)
-    print("✅ Dados salvos e gráfico gerado!")
+    print("success!!")
