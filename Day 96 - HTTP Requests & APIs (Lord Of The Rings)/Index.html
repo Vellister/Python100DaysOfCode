@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Senhor dos Anéis - Personagens da Terra Média</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .bg-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(2px 2px at 20px 30px, #ffd700, transparent),
+                        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                        radial-gradient(1px 1px at 90px 40px, #ffd700, transparent),
+                        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                        radial-gradient(2px 2px at 160px 30px, #ffd700, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 5s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.8); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #c0c0c0;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Character Card */
+        .character-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 1s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .character-card:hover::before {
+            left: 100%;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .ring-loader {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 215, 0, 0.2);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .loading p {
+            color: #c0c0c0;
+            font-size: 1.1rem;
+        }
+
+        /* Character Layout */
+        .character-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Image Section */
+        .image-section {
+            position: relative;
+        }
+
+        .character-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .character-image:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 60%, rgba(255, 215, 0, 0.1) 100%);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .image-section:hover .image-overlay {
+            opacity: 1;
+        }
+
+        /* Info Section */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .character-name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .character-description {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ffd700;
+            backdrop-filter: blur(10px);
+        }
+
+        .character-description p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+
+        .character-quote {
+            position: relative;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .quote-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #ffd700;
+            text-align: center;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 215, 0, 0.3);
+            position: absolute;
+            font-family: serif;
+        }
+
+        .quote-text::before {
+            top: -20px;
+            left: -10px;
+        }
+
+        .quote-text::after {
+            bottom: -50px;
+            right: -10px;
+        }
+
+        /* Actions */
+        .character-actions {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            color: #1a1a2e;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ffed4a, #ffd700);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .instructions p {
+            color: #c0c0c0;
+            font-size: 1rem;
+        }
+
+        .instructions kbd {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 600;
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .character-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .image-section {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 40px 15px;
+            }
+
+            .character-card {
+                padding: 30px 20px;
+            }
+
+            .character-image {
+                height: 400px;
+            }
+
+            .character-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Hide/Show elements */
+        .hidden {
+            display: none;
+        }
+
+        /* Smooth transitions */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Error state */
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #ff6b6b;
+        }
+
+        .error h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-stars"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">O Senhor dos Anéis</h1>
+        <p class="subtitle">Descubra os personagens épicos da Terra Média</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <div class="ring-loader"></div>
+            <h3>Invocando personagem...</h3>
+            <p>Explorando os reinos da Terra Média</p>
+        </div>
+
+        <!-- Character Card -->
+        <div id="characterCard" class="character-card hidden">
+            <div class="character-content">
+                <!-- Image Section -->
+                <div class="image-section">
+                    <img id="characterImage" class="character-image" src="" alt="">
+                    <div class="image-overlay"></div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="info-section">
+                    <h2 id="characterName" class="character-name"></h2>
+
+                    <div class="character-description">
+                        <p id="characterDescription"></p>
+                    </div>
+
+                    <div class="character-quote">
+                        <div id="characterQuote" class="quote-text"></div>
+                    </div>
+
+                    <div class="character-actions">
+                        <button id="newCharacterBtn" class="btn btn-primary">
+                            <span class="btn-icon">🎲</span>
+                            Novo Personagem
+                        </button>
+
+                        <a id="wikiLink" href="#" target="_blank" class="btn btn-secondary hidden">
+                            <span class="btn-icon">📖</span>
+                            Ver na Wiki
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <p>
+                Pressione <kbd>Espaço</kbd> ou <kbd>Enter</kbd> para descobrir um novo personagem
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Sample character data (você pode substituir pelos seus dados)
+        const characters = [
+            {
+  name: "Frodo Baggins",
+  description: "Um hobbit do Condado que se tornou o portador do Um Anel. Protagonista da Demanda do Anel, responsável por levar o Anel até o Monte da Perdição para sua destruição.",
+  quote: "No Sam! It's you! I'm sorry Sam.",
+  image: "IMAGES/Frodo_Baggins.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Frodo_Baggins"
+},
+
+{
+  name: "Samwise Gamgee",
+  description: "Jardineiro de Frodo Baggins e seu mais leal companheiro. Membro original da Sociedade do Anel que permaneceu com Frodo até o fim da jornada ao Monte da Perdição.",
+  quote: "Look Frodo. It's Mr Bilbo's trolls",
+  image: "IMAGES/Samwise_Gamgee.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Samwise_Gamgee"
+},
+
+{
+  name: "Gandalf",
+  description: "Um dos Istari, os magos enviados à Terra Média para ajudar na luta contra o mal. Conhecido como Gandalf, o Cinzento, e depois como Gandalf, o Branco.",
+  quote: "Where? When?",
+  image: "IMAGES/Gandalf.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gandalf"
+},
+
+{
+  name: "Aragorn II Elessar",
+  description: "Herdeiro legítimo ao trono de Gondor, conhecido inicialmente como Passolargo. Ranger do Norte que se tornou Rei de Gondor e Arnor após a Guerra do Anel.",
+  quote: "Kingsfoil!",
+  image: "IMAGES/Aragorn_II_Elessar.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Aragorn"
+},
+
+{
+  name: "Gollum",
+  description: "Criatura corrompida pelo Um Anel, anteriormente conhecido como Sméagol. Obcecado em recuperar seu 'precioso', o Anel que possuiu por séculos.",
+  quote: "Oh, yes, we could. Spoil a nice fish. Give it to us raw and wriggling. You keep nasty chips.",
+  image: "IMAGES/Gollum.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gollum"
+},
+
+{
+  name: "Peregrin Took",
+  description: "Hobbit do Condado, primo de Frodo e melhor amigo de Merry. Membro da Sociedade do Anel, conhecido por sua curiosidade e natureza impulsiva.",
+  quote: "Leave him alone!",
+  image: "IMAGES/Peregrin_Took.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Peregrin_Took"
+},
+
+{
+  name: "Meriadoc Brandybuck",
+  description: "Hobbit do Condado, primo de Frodo e melhor amigo de Pippin. Membro da Sociedade do Anel, mais maduro e responsável que Pippin.",
+  quote: "I think we might have made a mistake leaving the Shire, Pippin.",
+  image: "IMAGES/Meriadoc_Brandybuck.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Meriadoc_Brandybuck"
+},
+
+{
+  name: "Gimli",
+  description: "Anão guerreiro, filho de Glóin, membro da Sociedade do Anel. Representante da raça dos Anões, lutou ao lado de Elfos na Guerra do Anel.",
+  quote: "What is it? What do you see?",
+  image: "IMAGES/Gimli.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gimli"
+},
+
+{
+  name: "Théoden",
+  description: "Rei de Rohan, libertado da influência de Saruman por Gandalf. Liderou seu povo na defesa de Helm's Deep e na Batalha dos Campos do Pelennor.",
+  quote: "Duty? No. I would have you smile again, not grieve for those whose time has come. You shall live to see these days renewed, and no more despair",
+  image: "IMAGES/Théoden.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Théoden"
+},
+
+{
+  name: "Faramir",
+  description: "Capitão de Gondor, irmão mais novo de Boromir e filho de Denethor II. Nobre e sábio, resistiu à tentação do Um Anel.",
+  quote: "Hurry.",
+  image: "IMAGES/Faramir.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Faramir"
+},
+
+{
+  name: "Legolas",
+  description: "Príncipe élfico da Floresta das Trevas, filho do Rei Thranduil. Membro da Sociedade do Anel, arqueiro habilidoso e guerreiro ágil.",
+  quote: "Hiro hyn h'dh' ab 'wanath...",
+  image: "IMAGES/Legolas.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Legolas"
+},
+
+{
+  name: "Bilbo Baggins",
+  description: "Hobbit do Condado, tio e mentor de Frodo. Antigo portador do Um Anel e protagonista de 'O Hobbit'. Aventureiro que descobriu o Anel na caverna de Gollum.",
+  quote: "You've caught me a bit unprepared I'm afraid urm we've only got cold chicken and a bit of pickle oh and there's some cheese here, oh no that wont do! Urm we've got raspberry jam, an apple tart, but we've not much for afters. Oh no we're all right, I've found some sponge cake! I can make you some eggs if you ' oh'. Gandalf?",
+  image: "IMAGES/Bilbo_Baggins.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Bilbo_Baggins"
+},
+
+{
+  name: "Éowyn",
+  description: "Sobrinha do Rei Théoden de Rohan, guerreira corajosa que lutou disfarçada como Dernhelm. Derrotou o Rei-Bruxo de Angmar na Batalha dos Campos do Pelennor.",
+  quote: "We need you here.",
+  image: "IMAGES/Éowyn.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Éowyn"
+},
+
+{
+  name: "Treebeard",
+  description: "Ent mais antigo da Floresta de Fangorn, líder dos Ents. Pastor de árvores que guarda as florestas e liderou o ataque contra Isengard.",
+  quote: "Away with you. You should not be waking. Eat earth. Dig deep. Drink water.",
+  image: "IMAGES/Treebeard.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Treebeard"
+},
+
+{
+  name: "Denethor II",
+  description: "Senescal de Gondor, pai de Boromir e Faramir. Governante orgulhoso e obstinado que sucumbiu ao desespero e à loucura.",
+  quote: "You? Oh, I see. A chance for Faramir, captain of Gondor, to show his quality. I think not. I trust this mission only to your brother. The one who will not fail me.",
+  image: "IMAGES/Denethor_II.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Denethor_II"
+},
+
+{
+  name: "Saruman",
+  description: "Mago Branco corrompido, líder dos Istari que se aliou a Sauron. Construtor de um exército de Uruk-hai em Isengard para conquistar a Terra Média.",
+  quote: "If the mountain defeats you will you risk a more dangerous road",
+  image: "IMAGES/Saruman.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Saruman"
+},
+
+{
+  name: "Boromir",
+  description: "Nobre guerreiro de Gondor, filho mais velho de Denethor II e irmão de Faramir. Membro da Sociedade do Anel que tentou tomar o Anel de Frodo.",
+  quote: "The One Ring. lsildur's Bane.",
+  image: "IMAGES/Boromir.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Boromir"
+},
+
+{
+  name: "Arwen",
+  description: "Princesa élfica de Valfenda, filha de Elrond. Amor de Aragorn e futura Rainha de Gondor, escolheu a mortalidade para ficar com seu amado.",
+  quote: "It was a gift. Keep it.",
+  image: "IMAGES/Arwen.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Arwen"
+},
+
+{
+  name: "Éomer",
+  description: "Sobrinho do Rei Théoden, Marechal de Rohan e líder dos Cavaleiros de Rohan. Tornou-se Rei de Rohan após a morte de Théoden.",
+  quote: "You have no authority here.Your orders mean nothing.",
+  image: "IMAGES/Éomer.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Éomer"
+},
+
+{
+  name: "Elrond",
+  description: "Senhor élfico de Valfenda, meio-elfo e portador de Vilya. Membro do Conselho Branco e pai de Arwen, guardião de grande sabedoria.",
+  quote: "I will not leave my daughter hereto die.",
+  image: "IMAGES/Elrond.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Elrond"
+},
+
+{
+  name: "Gríma Wormtongue",
+  description: "Conselheiro corrupto do Rei Théoden, secretamente servo de Saruman. Manipulou o rei com suas palavras venenosas até ser exposto por Gandalf.",
+  quote: "You see much, Eomer, son of Eomund.",
+  image: "IMAGES/Gríma_Wormtongue.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gríma"
+},
+
+{
+  name: "Galadriel",
+  description: "Senhora élfica de Lothlórien, uma das mais poderosas elfas da Terra Média. Portadora de Nenya e possuidora de grande sabedoria e poder.",
+  quote: "It betrayed Isildur,to his death. And some things that should not have been forgotten were lost. History became legend, legend became myth and for two and a half thousand years the Ring passed out of all knowledge. Until, when chance came, it ensnared a new bearer.",
+  image: "IMAGES/Galadriel.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Galadriel"
+},
+
+{
+  name: "Gamling",
+  description: "Soldado veterano de Rohan, leal servidor do Rei Théoden. Comandou as defesas durante o cerco de Helm's Deep.",
+  quote: "What of those who cannot fight, my lord? The women and children?",
+  image: "IMAGES/Gamling.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gamling"
+},
+
+{
+  name: "Gothmog",
+  description: "Tenente de Morgul, comandante orc das forças de Sauron. Liderou o cerco a Minas Tirith durante a Batalha dos Campos do Pelennor.",
+  quote: "Fire at will!",
+  image: "IMAGES/Gothmog_(Lieutenant_of_Morgul).jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Gothmog_(Lieutenant_of_Morgul)"
+},
+
+{
+  name: "Uglúk",
+  description: "Uruk-hai de Isengard, líder do grupo que capturou Merry e Pippin. Servo de Saruman em conflito com os orcs de Mordor.",
+  quote: "I don't take orders from Orc-maggots.Saruman will have his prize.We will deliver them.",
+  image: "IMAGES/Uglúk.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Uglúk"
+},
+
+{
+  name: "Shagrat",
+  description: "Capitão orc da Torre de Cirith Ungol. Guardião que encontrou as pertences de Frodo após o ataque de Shelob.",
+  quote: "What's this?",
+  image: "IMAGES/Shagrat.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Shagrat"
+},
+
+{
+  name: "Witch-King of Angmar",
+  description: "Líder dos Nazgûl, o mais terrível dos Nove. Antigo rei corrompido pelo poder dos Anéis, servo mais poderoso de Sauron.",
+  quote: "I will break him.",
+  image: "IMAGES/Witch-King_of_Angmar.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Witch-king_of_Angmar"
+},
+
+{
+  name: "The King of the Dead",
+  description: "Líder dos Mortos de Dunharrow, amaldiçoado por quebrar seu juramento a Isildur. Liderou o exército fantasma que ajudou Aragorn.",
+  quote: "The way is shut! It was made by those who are dead. And the dead keep it. The way is shut! Now you must die!",
+  image: "IMAGES/The_King_of_the_Dead.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/King_of_the_Dead"
+},
+
+{
+  name: "Madril",
+  description: "Capitão de Gondor, subordinado de Faramir. Oficial responsável por reportar movimentos inimigos nas fronteiras de Ithilien.",
+  quote: "Our scouts report Saruman has attacked Rohan. Theoden's people have fled to Helm's Deep. But we must look to our own borders. Faramir, Orcs are on the move. Sauron is marshaling an army. Easterlings and Southrons are at the Black Gate.",
+  image: "IMAGES/Madril.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Madril"
+},
+
+{
+  name: "Haldir",
+  description: "Elfo de Lothlórien, irmão de Rúmil e Orophin. Guardião das fronteiras que guiou a Sociedade através de Lothlórien.",
+  quote: "Aragorn!",
+  image: "IMAGES/Haldir_(Haladin).jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Haldir_(Haladin)"
+},
+
+{
+  name: "Háma",
+  description: "Capitão da Guarda Real de Rohan, leal servidor do Rei Théoden. Guardião do Salão Dourado em Edoras.",
+  quote: "I cannot allow you before Theoden King so armed, Gandalf Greyhame. By order of Grima Wormtongue.",
+  image: "IMAGES/Háma.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Háma"
+},
+
+{
+  name: "Mouth of Sauron",
+  description: "Tenente da Torre Barad-dûr, mensageiro de Sauron nos Portões Negros. Númenóreano Negro corrompido que serve como porta-voz do Senhor do Escuro.",
+  quote: "My master Sauron the Great bids thee welcome.",
+  image: "IMAGES/Mouth_of_Sauron.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Mouth_of_Sauron"
+},
+
+{
+  name: "Morwen",
+  description: "Mãe de Éothain e Freda, refugiada de Rohan durante os ataques de Saruman. Representante do sofrimento do povo comum durante a guerra.",
+  quote: "Eothain!Freda!",
+  image: "IMAGES/Morwen.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Morwen"
+},
+
+{
+  name: "Grishnákh",
+  description: "Orc de Mordor, rival de Uglúk na captura de Merry e Pippin. Servo de Sauron em conflito com os Uruk-hai de Saruman.",
+  quote: "Alive? Why alive? Do they give good sport?",
+  image: "IMAGES/Grishnákh.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Grishnákh"
+},
+
+{
+  name: "Sauron",
+  description: "O Senhor do Escuro, antagonista principal da saga. Maia corrompido que forjou o Um Anel para dominar todos os outros Anéis de Poder.",
+  quote: "Aragorn! Elessar!",
+  image: "IMAGES/Sauron.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Sauron"
+},
+
+{
+  name: "Barliman Butterbur",
+  description: "Proprietário da taverna 'O Pônei Saltitante' em Bri. Homem bondoso que ofereceu abrigo aos hobbits em sua jornada.",
+  quote: "Good Evening little masters. What can I do for you? If you're looking for accomodation, we've got some nice, cosy hobbit sized rooms available. Always proud to cater to the little folk, Mr err...?",
+  image: "IMAGES/Barliman_Butterbur.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Barliman_Butterbur"
+},
+
+{
+  name: "Déagol",
+  description: "Hobbit do povo do Rio, primo de Sméagol. Descobriu o Um Anel no rio Anduin e foi assassinado por Sméagol por causa dele.",
+  quote: "Why?",
+  image: "IMAGES/Déagol.jpg",
+  wiki_url: "https://lotr.fandom.com/wiki/Déagol"
+}
+        ];
+
+        // DOM Elements
+        const loading = document.getElementById('loading');
+        const characterCard = document.getElementById('characterCard');
+        const characterImage = document.getElementById('characterImage');
+        const characterName = document.getElementById('characterName');
+        const characterDescription = document.getElementById('characterDescription');
+        const characterQuote = document.getElementById('characterQuote');
+        const newCharacterBtn = document.getElementById('newCharacterBtn');
+        const wikiLink = document.getElementById('wikiLink');
+
+        let currentCharacterIndex = 0;
+        let isLoading = false;
+
+        // Show loading state
+        function showLoading() {
+            isLoading = true;
+            loading.classList.remove('hidden');
+            characterCard.classList.add('hidden');
+            newCharacterBtn.disabled = true;
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            isLoading = false;
+            loading.classList.add('hidden');
+            characterCard.classList.remove('hidden');
+            characterCard.classList.add('scale-in');
+            newCharacterBtn.disabled = false;
+        }
+
+        // Display character with animations
+        function displayCharacter(character) {
+            // Update content
+            characterName.textContent = character.name;
+            characterDescription.textContent = character.description;
+            characterQuote.textContent = character.quote;
+            characterImage.src = character.image;
+            characterImage.alt = character.name;
+
+            // Handle wiki link
+            if (character.wiki_url) {
+                wikiLink.href = character.wiki_url;
+                wikiLink.classList.remove('hidden');
+            } else {
+                wikiLink.classList.add('hidden');
+            }
+
+            // Add fade-in effect to text elements
+            [characterName, characterDescription, characterQuote].forEach((element, index) => {
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.classList.add('fade-in');
+                }, index * 100);
+            });
+        }
+
+        // Get random character
+        function getRandomCharacter() {
+            if (isLoading) return;
+
+            showLoading();
+
+            // Simulate loading time
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                displayCharacter(characters[randomIndex]);
+                hideLoading();
+            }, 1500);
+        }
+
+        // Handle image loading errors
+        characterImage.addEventListener('error', function() {
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><rect width="400" height="500" fill="%23333"/><text x="50%" y="50%" fill="%23999" text-anchor="middle" dy="0.3em" font-family="Arial">Imagem não disponível</text></svg>';
+            this.style.opacity = '0.6';
+        });
+
+        // Event listeners
+        newCharacterBtn.addEventListener('click', getRandomCharacter);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if ((event.code === 'Space' || event.code === 'Enter') && !isLoading) {
+                event.preventDefault();
+                getRandomCharacter();
+            }
+        });
+
+        // Initialize with first character
+        document.addEventListener('DOMContentLoaded', function() {
+            getRandomCharacter();
+        });
+
+        // Add button hover effects
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
