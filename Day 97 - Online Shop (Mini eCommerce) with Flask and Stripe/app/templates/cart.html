@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Seu Carrinho de Compras{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Seu Carrinho</h2>
+
+    {% if cart_items %}
+        <div class="row">
+            <div class="col-lg-8">
+                {% for item in cart_items %}
+                    <div class="card mb-3 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                <img src="{{ url_for('static', filename='images/' + item.image) }}" class="img-fluid rounded-start" alt="{{ item.name }}" style="max-height: 120px; object-fit: contain; padding: 10px;">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h5 class="card-title">{{ item.name }}</h5>
+                                            <p class="card-text text-muted">Preço: R$ {{ "%.2f"|format(item.price) }}</p>
+                                        </div>
+                                        <a href="{{ url_for('main.remove_from_cart', product_id=item.id) }}" class="btn btn-sm btn-outline-danger" title="Remover item">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </a>
+                                    </div>
+
+                                    <form method="POST" action="{{ url_for('main.update_cart', product_id=item.id) }}" class="d-flex align-items-center mt-2">
+                                        <label for="quantity-{{ item.id }}" class="form-label me-2 mb-0">Qtd:</label>
+                                        <input type="number" name="quantity" id="quantity-{{ item.id }}" value="{{ item.quantity }}" min="0" class="form-control" style="width: 70px;">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary ms-2">Atualizar</button>
+                                        <span class="ms-auto fs-5 fw-bold text-dark">Subtotal: R$ {{ "%.2f"|format(item.subtotal) }}</span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Resumo do Pedido</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Total ({{ cart_item_count }} itens)</strong>
+                                <span class="fs-4 fw-bold text-primary">R$ {{ "%.2f"|format(grand_total) }}</span>
+                            </li>
+                        </ul>
+                        <a href="{{ url_for('main.checkout') }}" class="btn btn-success btn-lg w-100 mt-3">
+                            <i class="bi bi-shield-check-fill me-1"></i>
+                            Finalizar Compra
+                        </a>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary w-100 mt-2">
+                            Continuar Comprando
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="text-muted">Seu carrinho está vazio.</h3>
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">
+                Ver produtos
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
