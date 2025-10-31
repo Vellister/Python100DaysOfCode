@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{{ url_for('admin.dashboard') }}" class="list-group-item list-group-item-action">
+                    Dashboard
+                </a>
+                <a href="{{ url_for('admin.list_products') }}" class="list-group-item list-group-item-action active">Gerenciar Produtos</a>
+                <a href="{{ url_for('admin.list_orders') }}" class="list-group-item list-group-item-action">Ver Pedidos</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <h2>{{ legend }}</h2> <hr>
+
+            <form method="POST" action="">
+                {{ form.hidden_tag() }} <fieldset class="form-group">
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}<span>{{ error }}</span>{% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.name(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.price.label(class="form-label") }}
+                         {% if form.price.errors %}
+                            {{ form.price(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.price.errors %}<span>{{ error }}</span>{% endfor %}
+                            </div>
+                        {% else %}
+                             {{ form.price(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {% if form.description.errors %}
+                            {{ form.description(class="form-control is-invalid", rows=5) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}<span>{{ error }}</span>{% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.description(class="form-control", rows=5) }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.image_file.label(class="form-label") }}
+                         {% if form.image_file.errors %}
+                            {{ form.image_file(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.image_file.errors %}<span>{{ error }}</span>{% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.image_file(class="form-control") }}
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Ex: "meu-produto.jpg". Este arquivo deve ser colocado manualmente na pasta 'app/static/images/'.
+                        </small>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
