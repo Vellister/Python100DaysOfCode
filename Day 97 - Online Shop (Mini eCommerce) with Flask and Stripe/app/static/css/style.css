@@ -1,0 +1,98 @@
+:root {
+    --primary-color: #0d6efd;
+    --primary-gradient: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --transition-speed: 0.3s;
+}
+
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif; /* Use uma fonte moderna, se disponível */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-col {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0; /* Começa invisível para a animação funcionar */
+}
+
+
+.product-card {
+    border: none !important; /* Sobrescreve o !important do Bootstrap se necessário */
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+
+.card-img-container {
+    overflow: hidden;
+    border-top-left-radius: var(--bs-card-inner-border-radius);
+    border-top-right-radius: var(--bs-card-inner-border-radius);
+}
+
+.product-card .card-img-top {
+    height: 250px;
+    width: 100%;
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    transition: transform var(--transition-speed) ease-in-out;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-price {
+    color: var(--primary-color);
+}
+
+
+
+.btn-primary {
+    background-image: var(--primary-gradient);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(13, 110, 253, 0.3);
+    /* Manter a cor mesmo no hover */
+    background-image: var(--primary-gradient);
+    border: none;
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(13, 110, 253, 0.2);
+}
+
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .product-card .card-img-top {
+        height: 200px;
+    }
+}
