@@ -9,7 +9,7 @@
 
 body {
     background-color: #f8f9fa;
-    font-family: 'Inter', sans-serif; /* Use uma fonte moderna, se disponível */
+    font-family: 'Inter', sans-serif; 
 }
 
 @keyframes fadeInUp {
@@ -25,12 +25,12 @@ body {
 
 .product-col {
     animation: fadeInUp 0.5s ease-out forwards;
-    opacity: 0; /* Começa invisível para a animação funcionar */
+    opacity: 0; 
 }
 
 
 .product-card {
-    border: none !important; /* Sobrescreve o !important do Bootstrap se necessário */
+    border: none !important; 
     box-shadow: var(--card-shadow);
     transition: all var(--transition-speed) ease-in-out;
 }
@@ -50,7 +50,7 @@ body {
 .product-card .card-img-top {
     height: 250px;
     width: 100%;
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    object-fit: cover; 
     transition: transform var(--transition-speed) ease-in-out;
 }
 
