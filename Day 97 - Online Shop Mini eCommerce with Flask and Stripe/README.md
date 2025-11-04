@@ -42,13 +42,13 @@ Secure Checkout: Integrates with the Stripe Checkout API. The Flask backend send
 
 Order Creation: Before redirecting to Stripe, an order with "Pending" status is created in the database.
 
-Payment Confirmation (Simulated Webhook): Instead of a complex, hard-to-deploy true webhook, the app uses a "fake webhook" strategy on the /success route. When Stripe redirects the user:
+Real-Time Payment Confirmation (Stripe Webhook): The application exposes a secure /stripe-webhook endpoint to listen for real-time events from Stripe. When a payment is successful, Stripe sends a checkout.session.completed event, which the app securely verifies and uses to:
 
-The app finds the user's last "Pending" order.
+Find the corresponding "Pending" order in the database.
 
-It updates the order status to "Completed".
+Update the order's status to "Completed".
 
-It clears the user's cart from the session.
+(The /success route simply thanks the user and clears their cart).
 
 4. Admin Dashboard
 Restricted Access: The /admin panel is fully secured using a custom @admin_required decorator, which rejects non-admin users and unauthenticated guests.
@@ -186,13 +186,13 @@ Checkout Seguro: Integração com a API do Stripe Checkout, onde o Flask envia o
 
 Criação de Pedidos: Antes de redirecionar para o Stripe, um pedido com status "Pendente" é criado no banco de dados.
 
-Confirmação de Pagamento ("Fake Webhook"): Em vez de usar um webhook complexo (que é difícil de testar e implantar), o app usa uma lógica de "fake webhook". Quando o Stripe redireciona o usuário para a rota /success:
+Confirmação de Pagamento em Tempo Real (Stripe Webhook): A aplicação expõe um endpoint seguro /stripe-webhook para "ouvir" eventos em tempo real do Stripe. Quando um pagamento é bem-sucedido, o Stripe envia um evento checkout.session.completed, que o app verifica de forma segura e usa para:
 
-O aplicativo encontra o último pedido "Pendente" daquele usuário.
+Encontrar o pedido "Pendente" correspondente no banco de dados.
 
-Ele atualiza o status do pedido para "Concluído".
+Atualizar o status do pedido para "Concluído".
 
-Limpa o carrinho da sessão.
+(A rota /success apenas agradece o usuário e limpa o carrinho).
 
 4. Painel de Administrador
 Acesso Restrito: O painel /admin é totalmente protegido usando um decorador @admin_required, que barra visitantes e usuários comuns.
