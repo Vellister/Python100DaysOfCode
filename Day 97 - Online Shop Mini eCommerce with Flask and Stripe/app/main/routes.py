@@ -12,6 +12,7 @@ from app.models import Product, Order, OrderItem
 
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
+    print("--- DEBUG: Rota INDEX (versao 2) foi acessada ---", flush=True)
     if request.method == 'POST':
         product_id = request.form.get('product_id')
         cart = session.get('cart', {})
@@ -137,7 +138,7 @@ def checkout():
             payment_method_types=['card'],
             line_items=line_items,
             mode='payment',
-            success_url=YOUR_DOMAIN + url_for('main.success'),  
+            success_url=YOUR_DOMAIN + url_for('main.success'),
             cancel_url=YOUR_DOMAIN + url_for('main.cancel'),
             metadata={'order_id': new_order.id}
         )
@@ -155,7 +156,7 @@ def checkout():
 
 
 @main_bp.route('/success')
-@login_required  
+@login_required
 def success():
     try:
         order = Order.query.filter_by(customer=current_user, status="Pendente").order_by(
@@ -171,9 +172,7 @@ def success():
         print(f"ERRO no workaround /success: {e}")
         db.session.rollback()
 
-    # Limpa o carrinho
     session.pop('cart', None)
-    # Mensagem de sucesso atualizada
     flash('Pagamento realizado com sucesso! Seu pedido foi confirmado.', 'success')
     return render_template('success.html')
 
@@ -220,3 +219,8 @@ def stripe_webhook():
             return Response(status=500)
 
     return Response(status=200)
+
+
+@main_bp.route('/teste123')
+def rota_de_teste():
+    return "<h1>Funciona! O deploy (v2) esta atualizado.</h1>"
