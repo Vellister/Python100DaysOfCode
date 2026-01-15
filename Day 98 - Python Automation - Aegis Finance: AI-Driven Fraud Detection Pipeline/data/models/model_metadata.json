@@ -1,0 +1,51 @@
+{
+    "project_name": "Personal Finance Automated Dashboard",
+    "model_info": {
+        "algorithm": "XGBoost Classifier",
+        "training_date": "2025-12-19 01:49:54",
+        "version": "1.0.0"
+    },
+    "parameters": {
+        "threshold": 0.7,
+        "n_estimators": 200,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "scale_pos_weight": 171.74604496253122
+    },
+    "features_used": [
+        "amt",
+        "lat",
+        "long",
+        "city_pop",
+        "merch_lat",
+        "merch_long",
+        "hour",
+        "day_of_week",
+        "month",
+        "category_food_dining",
+        "category_gas_transport",
+        "category_grocery_net",
+        "category_grocery_pos",
+        "category_health_fitness",
+        "category_home",
+        "category_kids_pets",
+        "category_misc_net",
+        "category_misc_pos",
+        "category_personal_care",
+        "category_shopping_net",
+        "category_shopping_pos",
+        "category_travel",
+        "gender_M"
+    ],
+    "performance_metrics": {
+        "precision": 0.3836800864631181,
+        "recall": 0.9460359760159893,
+        "f1_score": 0.5459438677431757,
+        "pr_auc": 0.8790174608494992,
+        "roc_auc": 0.9979405017922666
+    },
+    "error_analysis": {
+        "avg_amt_false_positive": 411.44248136782113,
+        "avg_amt_false_negative": 118.47617283950616
+    }
+}
